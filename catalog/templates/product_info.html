@@ -5,26 +5,35 @@
 {% block title %}О товаре{% endblock %}
 
 {% block content %}
-<div class="album py-5 bg-body-tertiary">
-  <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      <div class="col">
-        <div class="card shadow-sm">
-          <img src="{{ products.image | media_filter }}" alt="Изображение товара отсутствует">
-          <div class="card-body">
-            <p class="card-text">{{products.description}}</p>
-            <p class="card-text">{{products.purchase_price}}руб.</p>
-            <div class="d-flex justify-content-between align-items-center">
 
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Купить</button>
-              </div>
-              <small class="text-body-secondary">9 mins</small>
-            </div>
+<div class="row-md-3">
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row">
+            <img src="{{ products.image | media_filter }}" alt="Изображение товара отсутствует" height="550" width="450">
           </div>
+      <div class="row ">
+        <div class="col">
+
+
+            <div class="card-body">
+              <h4 class="card-title pricing-card-title">{{ products.category }} {{ products.name }}</h4>
+              <p class="card-text">{{products.description}}</p>
+              <p class="card-text">{{products.purchase_price}}руб.</p>
+              <div class="d-flex justify-content-between align-items-center">
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Купить</button>
+                </div>
+                <small class="text-body-secondary">{{ products.updated_at | date:"d M Y" }}</small>
+              </div>
+            </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 {% endblock %}

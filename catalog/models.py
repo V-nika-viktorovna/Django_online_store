@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Category(models.Model):
-    id_category = models.ImageField(max_length=20, unique=True, verbose_name='id категории', help_text='id категории')
+
     name = models.CharField(max_length=254, verbose_name='Наименование')
     description = models.TextField(null=True, blank=True, verbose_name='описание')
 
@@ -16,7 +16,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    id_product = models.IntegerField(max_length=20, verbose_name='id продукта', help_text='id продукта')
+
     name = models.CharField(max_length=254, verbose_name='Наименование', help_text='Наименование')
     description = models.TextField(null=True, blank=True, verbose_name='описание', help_text='описание')
     image = models.ImageField(null=True, blank=True, upload_to='product/photo')
