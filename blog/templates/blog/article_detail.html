@@ -1,0 +1,49 @@
+{% extends 'blog/basic_article.html' %}
+
+{% load my_tags %}
+
+{% block title %}О товаре{% endblock %}
+
+{% block content %}
+
+<p>Количество просмотров: {{object.views}}</p>
+
+<div class="row-md-3">
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+        <div class="col">
+
+            <div class="card-body">
+              <h4 class="card-title pricing-card-title">{{ object.name }}</h4>
+              <div class="row">
+                <img src="{{ article.image | media_filter }}" alt="Изображение отсутствует" >
+              </div>
+              <div class="row ">
+
+              <p class="card-text">{{object.description}}</p>
+              <p class="card-text">
+                {% if object.publication_attribute == True %}
+                Статья опубликована
+                {% else %}
+                Статья не опубликована
+                {% endif %}
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+
+                <div class="btn-group">
+
+                  <a class="btn btn-primary" href="{% url 'blog:home_article' %}">Закрыть</a>
+
+                </div>
+                <small class="text-body-secondary">{{ object.updated_at | date:"d M Y" }}</small>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

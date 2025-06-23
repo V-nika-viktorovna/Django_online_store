@@ -1,36 +1,29 @@
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
+from django.views.generic import DetailView, ListView, View
 
 from .models import Product
 
 
-def home_view(request):
-    """Контроллер для GET запроса при переходе на страницу home"""
-
-    products = Product.objects.all()
-    context = {'products': products}
-
-    return render(request, 'home.html', context)
+class CatalogListViev(ListView):
+    model = Product
+    template_name = 'home.html'
+    context_object_name = 'products'
 
 
-def contacts_view(request):
-    """Контроллер для выполнения GET запроса при переходе на страницу contacts,
-    и выполнения POST запроса при отправке данных из формы 'Свяжитесь с нами' """
+class CatalogContactsViev(View):
 
-    if request.method == 'POST':
+    def get(self, request):
+        return render(request, 'contacts.html')
 
+    def post(self, request):
         name = request.POST.get('name')
         phone = request.POST.get("phone")
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.\
-                            Мы связемся с вами по номеру телефона {phone}")
-
-    return render(request, 'contacts.html')
+                                    Мы связемся с вами по номеру телефона {phone}")
 
 
-def product_info_view(request, pk):
-    """Контроллер для GET запроса при переходе на страницу product_info"""
-
-    products = get_object_or_404(Product, id=pk)
-    context = {'products': products}
-
-    return render(request, 'product_info.html', context)
+class CatalogDetailViev(DetailView):
+    model = Product
+    template_name = 'product_info.html'
+    context_object_name = 'products'

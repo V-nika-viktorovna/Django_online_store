@@ -1,0 +1,41 @@
+{% extends 'blog/basic_article.html' %}
+
+{% load my_tags %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+
+<a class="btn btn-primary" href="{% url 'blog:blog_create' %}">Написать статью</a>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Skyblogs</h1>
+</div>
+
+<div class="container">
+    <div class="row text-center">
+        {% for article in object_list %}
+        <div class="col-3">
+            <div class="card mb-4 box-shadow" >
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ article.category}} {{ article.name}}</h4>
+                </div>
+                <div class="card-header">
+                    <p class="card-text">{{ article.description | truncatechars:100 }}</p>
+                </div>
+                <div class="card-body" >
+                    <img src="{{ article.image | media_filter }}" alt="Изображение товара отсутствует" width="150">
+                    <h1 class="card-title pricing-card-title">{{ articles.publication_attribute }}</h1>
+                    <a class="btn btn-primary" href="{% url 'blog:article_info' article.id %}">Читать</a>
+                    <a class="btn btn-primary" href="{% url 'blog:blog_update' article.id %}">Обновить</a>
+                    <div class="card-body" >
+                        <a class="btn btn-primary" href="{% url 'blog:blog_delete' article.id %}">удалить</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
