@@ -25,7 +25,7 @@ class ProductStyleMixin:
 
             if name == 'description':
                 field.widget.attrs.update({
-                    'placeholder': 'Введите название'
+                    'placeholder': 'Введите описание'
                 })
 
 
@@ -43,7 +43,8 @@ class ProductCreateForms(ProductStyleMixin, ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         name = cleaned_data.get('name')
+        description = cleaned_data.get('description')
 
         for unacceptable in unacceptables:
-            if unacceptable in name:
-                raise ValidationError(f'Название продукте не может содержать "{unacceptable}"')
+            if unacceptable in name or unacceptable in description:
+                raise ValidationError(f'Название или описание продукта не может содержать "{unacceptable}"')
