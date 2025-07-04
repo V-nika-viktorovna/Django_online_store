@@ -154,8 +154,8 @@ LOGOUT_REDIRECT_URL = '/home/'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'nika1viktorovna@yandex.ru'
-EMAIL_HOST_PASSWORD = 'ddosopblduubdudo'
+EMAIL_HOST_USER = os.getenv('LOGIN_MAILING')
+EMAIL_HOST_PASSWORD = os.getenv('PASS_MAILING')
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
