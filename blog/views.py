@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -28,7 +29,7 @@ class BlogContactsView(View):
                                     Мы связемся с вами по номеру телефона {phone}")
 
 
-class BlogDetailView(DetailView):
+class BlogDetailView(LoginRequiredMixin, DetailView):
     model = Article
 
     def get_object(self, queryset=None):
@@ -38,13 +39,13 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogCreateView (CreateView):
+class BlogCreateView (LoginRequiredMixin, CreateView):
     model = Article
     fields = ('name', 'description', 'image', 'publication_attribute')
     success_url = reverse_lazy('blog:home_article')
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
     fields = ('name', 'description', 'image', 'publication_attribute')
     success_url = reverse_lazy('blog:home_article')
@@ -53,6 +54,6 @@ class BlogUpdateView(UpdateView):
         return reverse_lazy('blog:article_info', args=[self.kwargs.get('pk')])
 
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     success_url = reverse_lazy('blog:home_article')

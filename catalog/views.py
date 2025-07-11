@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -27,7 +28,7 @@ class CatalogContactsViev(View):
                                     Мы связемся с вами по номеру телефона {phone}")
 
 
-class CatalogCreateView(CreateView):
+class CatalogCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductCreateForms
     template_name = 'product_form.html'
@@ -35,7 +36,7 @@ class CatalogCreateView(CreateView):
     success_url = reverse_lazy('catalog:home')
 
 
-class CatalogUpdateView(UpdateView):
+class CatalogUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductCreateForms
     template_name = 'product_form.html'
@@ -43,13 +44,13 @@ class CatalogUpdateView(UpdateView):
     success_url = reverse_lazy('catalog:home')
 
 
-class CatalogDetailViev(DetailView):
+class CatalogDetailViev(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'product_info.html'
     context_object_name = 'products'
 
 
-class CatalogDeleteView(DeleteView):
+class CatalogDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'product_confirm_delete.html'
     success_url = reverse_lazy('catalog:home')

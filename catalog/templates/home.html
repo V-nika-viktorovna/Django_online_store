@@ -5,8 +5,15 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
+
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Skystore</h1>
+    {% if user.is_authenticated %}
+    <h6 >Добро пожаловать! Вы вошли как {{ user.username }}</h6>
+    {% else %}
+    <h6 >Войдите или зарегистрируйтесь</h6>
+    <h6 >для просмотра, добавления и редактирования продуктов</h6>
+    {% endif %}
 </div>
 
 <div class="container">
@@ -23,11 +30,13 @@
                 <div class="card-body">
                     <img src="{{ product.image | media_filter }}" alt="Изображение товара отсутствует" width="150">
                     <h1 class="card-title pricing-card-title">{{ product.purchase_price }}руб.</h1>
+                    {% if user.is_authenticated %}
                     <a class="btn btn-primary" href="{% url 'catalog:product_info' product.id %}">Описание</a>
                     <a class="btn btn-primary" href="{% url 'catalog:product_update' product.id %}">Обновить</a>
                     <div class="card-body">
                         <a class="btn btn-primary" href="{% url 'catalog:product_delete' product.id %}">Удалить</a>
                     </div>
+                    {% endif %}
                 </div>
             </div>
 
@@ -35,4 +44,5 @@
         {% endfor %}
     </div>
 </div>
+
 {% endblock %}
