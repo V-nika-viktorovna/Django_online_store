@@ -9,7 +9,7 @@
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Skystore</h1>
     {% if user.is_authenticated %}
-    <h6 >Добро пожаловать! Вы вошли как {{ user.username }}</h6>
+    <h6 >Добро пожаловать! Вы вошли как {{ user.email }}</h6>
     {% else %}
     <h6 >Войдите или зарегистрируйтесь</h6>
     <h6 >для просмотра, добавления и редактирования продуктов</h6>
@@ -22,7 +22,15 @@
         <div class="col-3">
             <div class="card mb-4 box-shadow" >
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ product.category}} {{ product.name}}</h4>
+                    {% if product.publication_status %}
+                    <div class="text-bg-success p-3>
+                        <h4 class="my-0 font-weight-normal">{{ product.category}} {{ product.name}}</h4>
+                    </div>
+                    {% else %}
+                    <div class="text-bg-danger p-3>
+                        <h4 class="my-0 font-weight-normal">{{ product.category}} {{ product.name}}</h4>
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="card-header">
                     <p class="card-text">{{ product.description | truncatechars:27 }}</p>
@@ -32,10 +40,14 @@
                     <h1 class="card-title pricing-card-title">{{ product.purchase_price }}руб.</h1>
                     {% if user.is_authenticated %}
                     <a class="btn btn-primary" href="{% url 'catalog:product_info' product.id %}">Описание</a>
+                    {% if user == product.owner or perms.product.can_unpublish_product %}
                     <a class="btn btn-primary" href="{% url 'catalog:product_update' product.id %}">Обновить</a>
+                    {% endif %}
+                    {% if user == product.owner or perms.product.can_delete_products %}
                     <div class="card-body">
                         <a class="btn btn-primary" href="{% url 'catalog:product_delete' product.id %}">Удалить</a>
                     </div>
+                    {% endif %}
                     {% endif %}
                 </div>
             </div>

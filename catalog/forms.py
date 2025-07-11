@@ -48,3 +48,9 @@ class ProductCreateForms(ProductStyleMixin, ModelForm):
         for unacceptable in unacceptables:
             if unacceptable in name or unacceptable in description:
                 raise ValidationError(f'Название или описание продукта не может содержать "{unacceptable}"')
+
+
+class ProductModeratorForms(ProductStyleMixin, ModelForm):
+    class Meta:
+        model = Product
+        fields = ('description', 'publication_status',)
