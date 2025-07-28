@@ -30,6 +30,8 @@
 
 {% if user.is_authenticated %}
 <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_create' %}">Создать карточку продукта</a>
+<h6><small>После создания продукта дождитесь его публикации модератором</small></h6>
+<h6><small>Опубликованные продукты подсвечены зеленым</small></h6>
 {%endif%}
 
     {% block content %}{% endblock %}
