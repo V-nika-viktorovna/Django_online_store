@@ -8,6 +8,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
 
 from catalog.forms import ProductCreateForms, ProductModeratorForms
+from catalog.services import get_catalog_cache, list_products_in_category
 
 from .models import Product
 
@@ -16,6 +17,9 @@ class CatalogListViev(ListView):
     model = Product
     template_name = 'home.html'
     context_object_name = 'products'
+
+    def get_queryset(self):
+        return get_catalog_cache()
 
 
 class CatalogContactsViev(View):
@@ -65,6 +69,12 @@ class CatalogDetailViev(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'product_info.html'
     context_object_name = 'products'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = self.object.category
+        context['all_products'] = list_products_in_category(category)
+        return context
 
 
 class CatalogDeleteView(LoginRequiredMixin, DeleteView):
