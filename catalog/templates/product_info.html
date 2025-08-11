@@ -31,7 +31,11 @@
 
         </div>
       </div>
-      <p>все продукты в данной категории: {{ all_products }}</p>
+      <p>все продукты в данной категории:
+          {% for prod in all_products %}
+          <a href="{% url "catalog:product_info" prod.id %}">{{ prod.name }}</a>
+          {% endfor %}
+      </p>
     </div>
   </div>
 </div>

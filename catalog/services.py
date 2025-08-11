@@ -9,12 +9,12 @@ def list_products_in_category(category):
 
     list_products = Product.objects.filter(category=category)
 
-    result_list = []
-    for product in list_products:
-        result_list.append(product.name)
-
-    result = ", ".join(result_list)
-    return result
+    # result_list = []
+    # for product in list_products:
+    #     result_list.append(product.name)
+    #
+    # result = ", ".join(result_list)
+    return list_products
 
 
 def get_catalog_cache():
